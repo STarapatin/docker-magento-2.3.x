@@ -1,7 +1,5 @@
 FROM php:7.4-fpm
 
-MAINTAINER paiitop-dev <paiitop.dev@gmail.com>
-
 ARG USER_ID
 ARG GROUP_ID
 
@@ -103,5 +101,6 @@ WORKDIR /var/www
 
 USER "${USER_ID}:${GROUP_ID}"
 
-# CMD ["php-fpm"]
-CMD ["sh", "-c", "service cron start && php-fpm && cron -f >> /dev/stdout2>&1"]
+# CMD ["sh", "-c", "service cron start && php-fpm && cron -f >> /dev/stdout2>&1"]
+
+CMD ["php-fpm"]
