@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo '[gh0st_dev] - build Dev Space Docker'
+truncate -s 0 .env
+echo USER_ID=$(id -u) | tee -a .env
+echo GROUP_ID=$(id -g) | tee -a .env
+docker compose build

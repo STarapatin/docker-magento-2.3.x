@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+echo '[gh0st_dev] - reload Dev Space Docker'
+docker compose down
+docker compose up -d

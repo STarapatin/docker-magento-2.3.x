@@ -1,0 +1,70 @@
+version: "3.3"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - "fpm"
+      - "mysql"
+    volumes:
+      - ./data/www:/var/www
+      - ./docker/nginx/conf:/etc/nginx/conf.d:rw
+      - ./docker/nginx/log/:/var/log/nginx
+      - /tmp:/tmp
+
+  mailcatcher:
+    image: mailhog/mailhog
+    user: root
+    command: ["-smtp-bind-addr", "0.0.0.0:25", "-ui-bind-addr", "0.0.0.0:80", "-api-bind-addr", "0.0.0.0:80"]
+    expose:
+      - 80
+      - 25
+    ports:
+      - "8025:80"
+
+  fpm:
+    build: 
+      context: ./docker/php
+      args:
+        - USER_ID
+        - GROUP_ID
+    volumes:
+      - ./data/www:/var/www
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini:rw
+
+  mysql:
+    build: ./docker/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql:rw
+      - ./docker/mysql/sql:/tmp/sql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=magento
+      - MYSQL_USER=magento
+      - MYSQL_PASSWORD=magento
+
+  elasticsearch7:
+    image: elasticsearch:7.17.7
+    environment:
+      - ES_JAVA_OPTS=-Xmx800m
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch6-data:/usr/share/elasticsearch/data
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+         - subnet: 172.30.0.0/16
+
+volumes:
+  redis-data:
+    external: false
+  elasticsearch6-data:

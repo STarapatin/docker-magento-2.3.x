@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo '[gh0st_dev] - start Dev Space Docker'
+docker compose up -d
