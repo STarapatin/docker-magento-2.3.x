@@ -19,10 +19,9 @@
       - `MYSQL_USER=magento`
       - `MYSQL_PASSWORD=magento`
 
-Команды первого запуска:
-`
-
 Чистая установка:
+
+```
 COMPOSER_MEMORY_LIMIT=-1 composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition:2.3.7-p4 magento
 
 "repo.magento.com"
@@ -56,4 +55,4 @@ php bin/magento module:enable --all
 php bin/magento setup:upgrade
 
 php bin/magento deploy:mode:set developer
-`
+```
