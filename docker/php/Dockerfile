@@ -87,7 +87,7 @@ RUN yes | pecl install xdebug-2.9.8
 RUN chsh -s /bin/bash www-data
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.19
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=2.7.4
 
 # Retrieve php.ini settings
 ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
